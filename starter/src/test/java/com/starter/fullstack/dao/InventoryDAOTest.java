@@ -26,6 +26,7 @@ public class InventoryDAOTest {
   private InventoryDAO inventoryDAO;
   private static final String NAME = "Amber";
   private static final String PRODUCT_TYPE = "hops";
+  private static final String ID = "0";
 
   @Before
   public void setup() {
@@ -49,4 +50,23 @@ public class InventoryDAOTest {
     List<Inventory> actualInventory = this.inventoryDAO.findAll();
     Assert.assertFalse(actualInventory.isEmpty());
   }
+
+  /**
+   * Test Create Inventory method.
+   */
+  @Test
+  public void create() {
+    Inventory inventory = new Inventory();
+    inventory.setName(NAME);
+    inventory.setProductType(PRODUCT_TYPE);
+    // Testing if the create method changes the id value
+    inventory.setId(ID);
+    Assert.assertNotNull(inventory.getId());
+    inventoryDAO.create(inventory);
+    Assert.assertTrue(inventory.getId() != ID);
+    // Testing to see if the create method saved and inserted inventory
+    List<Inventory> actualInventory = this.inventoryDAO.findAll();
+    Assert.assertFalse(actualInventory.isEmpty());
+  }
+
 }

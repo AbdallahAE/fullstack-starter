@@ -51,8 +51,11 @@ public class InventoryDAO {
    * @return Created/Updated Inventory.
    */
   public Inventory create(Inventory inventory) {
-    // TODO
-    return null;
+    // Set Mongo ID to null, note: using lombok setters and getters
+    inventory.setId(null);
+    // Saves the new Inverntory into the collection
+    // various methods to do this: insert, upsert, update.
+    return this.mongoTemplate.save(inventory);
   }
 
   /**
@@ -86,3 +89,4 @@ public class InventoryDAO {
     return Optional.empty();
   }
 }
+
