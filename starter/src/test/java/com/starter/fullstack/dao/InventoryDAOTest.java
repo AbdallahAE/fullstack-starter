@@ -69,4 +69,28 @@ public class InventoryDAOTest {
     Assert.assertFalse(actualInventory.isEmpty());
   }
 
+  /**
+   * Test Delete Inventory method
+   */
+  @Test
+  public void delete() {
+    // ensuring that the collection is empty
+    List<Inventory> actualInventory = this.inventoryDAO.findAll();
+    Assert.assertTrue(actualInventory.isEmpty());
+    // Create and then saving an inventory into the collection
+    Inventory inventory = new Inventory();
+    inventory.setName(NAME);
+    inventory.setProductType(PRODUCT_TYPE);
+    inventory.setId(ID);
+    this.mongoTemplate.save(inventory);
+    // checking to see if the collection is no longer empty
+    actualInventory = this.inventoryDAO.findAll();
+    Assert.assertFalse(actualInventory.isEmpty());
+    // deleting the inventory by ID
+    this.inventoryDAO.delete(ID);
+    // Checking if the inventory was deleted
+    actualInventory = this.inventoryDAO.findAll();
+    Assert.assertTrue(actualInventory.isEmpty());
+  }
+
 }
